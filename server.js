@@ -16,6 +16,7 @@ const subscriptionKey = '79e67b0bf4b3446685d32df08bd0bf91';
 const endpoint = 'api.cognitive.microsofttranslator.com';
 
 const translateMessage = async (message, targetLanguage) => {
+  console.log(message , targetLanguage)
   try {
     const url = `https://${endpoint}/translate?api-version=3.0&to=${targetLanguage}`;
 
@@ -43,16 +44,22 @@ app.post('/' , async (req, res) => {
     
     await connectToMongoDB()
     try {
-      const results = await userSchema.find({text: message });
+      const results = await userSchema.find(
+          {
+            text: message,
+          }
+      );
       if (results.length) {
-        console.log(results[0].translatetext , '  Already there')
-        res.json({ trans : results[0].translatetext });
+        if (results[0].targetLang === targetLanguage) {
+          console.log(results[0].translatetext , '  Already there')
+          res.json({ trans : results[0].translatetext });
+        }
       }
       else {
         console.log('yet to save')
         // save to db
         translated = await translateMessage(message, targetLanguage);
-        add(message,translated)
+        add(message,translated,targetLanguage)
         res.json({ trans : translated });
       }
     } catch (error) {

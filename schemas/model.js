@@ -7,7 +7,8 @@ const reqtsring = {
 
 const userSchema = mongoose.Schema( {
     text: reqtsring,
-    translatetext: reqtsring
+    translatetext: reqtsring,
+    targetLang: reqtsring
 })
 
 module.exports = mongoose.model('users', userSchema)

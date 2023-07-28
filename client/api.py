@@ -1,5 +1,5 @@
 import requests , json
-url = 'http://localhost:8080/'
+url = 'https://translator-m1zi.onrender.com/'
 
 word = input('enter a word : ')
 

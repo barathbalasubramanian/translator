@@ -2,13 +2,15 @@
 const userSchema = require('../schemas/model')
 const connectToMongoDB = require('../mongodb/mongoconnection')
 
-module.exports = async (text,translatetext) => {
+module.exports = async (text,translatetext, targetLang) => {
     await connectToMongoDB()
     const user = {
         text: text,
-        translatetext: translatetext
+        translatetext: translatetext,
+        targetLang: targetLang
     }
-    await new userSchema(user).save()
+    console.log(user)
+    // await new userSchema(user).save()
   
     console.log('Saved')
 }
